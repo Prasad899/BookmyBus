@@ -113,11 +113,12 @@ public class BusTicketBookingSystem {
 
     // Initialize buses
     private static void initializeBuses() {
-        buses.add(new Bus("BUS001", "City Bengaluru", 10));
-        buses.add(new Bus("BUS002", "City Chennai", 5));
-        buses.add(new Bus("BUS003", "City Hyderabad", 2));
-        buses.add(new Bus("BUS004", "City Vishakapatnam", 11));
-        buses.add(new Bus("BUS005", "City Tirupati", 7));
+        buses.add(new Bus("BUS001", "Bengaluru", 5));
+        buses.add(new Bus("BUS002", "Hyderabad", 4));
+        buses.add(new Bus("BUS003", "Chennai", 2));
+        buses.add(new Bus("BUS004", "Tirupati", 6));
+        buses.add(new Bus("BUS005", "Vishakapatnam", 10));
+        buses.add(new Bus("BUS006", "Kadapa", 7));
     }
 
     // View available buses
@@ -135,13 +136,18 @@ public class BusTicketBookingSystem {
 
         for (Bus bus : buses) {
             if (bus.getBusNumber().equalsIgnoreCase(busNumber)) {
-                if (bus.getAvailableSeats() > 0) {
+                System.out.print("Enter the number of tickets to book: ");
+                int ticketsToBook = scanner.nextInt();
+
+                if (ticketsToBook <= bus.getAvailableSeats()) {
                     String bookingId = "BOOK" + (bookingCounter++);
                     bookings.add(new Booking(bookingId, busNumber));
-                    bus.bookSeat();
-                    System.out.println("Ticket booked successfully! Booking ID: " + bookingId);
+                    for (int i = 0; i < ticketsToBook; i++) {
+                        bus.bookSeat(); // Book each seat
+                    }
+                    System.out.println(ticketsToBook + " ticket(s) booked successfully! Booking ID: " + bookingId);
                 } else {
-                    System.out.println("No available seats on this bus.");
+                    System.out.println("Not enough available seats on this bus.");
                 }
                 return;
             }
